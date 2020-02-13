@@ -54,6 +54,7 @@ test -d build/linux-${LINUX_KERNEL_VERSION} || \
 #
 cp conf/busybox.config build/busybox-${BUSYBOX_VERSION}/.config
 cp conf/linux.config build/linux-${LINUX_KERNEL_VERSION}/.config
+cp conf/.config-fragment build/linux-${LINUX_KERNEL_VERSION}/.config-fragment
 
 #
 # build busybox, dropbear and linux
@@ -70,6 +71,7 @@ test -x build/dropbear-${DROPBEAR_VERSION}/dropbear || (
 )
 test -x build/linux-${LINUX_KERNEL_VERSION}/vmlinux || (
     cd build/linux-${LINUX_KERNEL_VERSION}
+    ./scripts/kconfig/merge_config.sh .config .config-fragment
     make ARCH=riscv CROSS_COMPILE=${CROSS_COMPILE} olddefconfig
     make -j$(nproc) ARCH=riscv CROSS_COMPILE=${CROSS_COMPILE} vmlinux
 )
