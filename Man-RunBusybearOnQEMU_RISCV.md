@@ -1,5 +1,3 @@
-## Run busybear-linux on qemu-system-riscv64
-
 ### [main ref](https://github.com/michaeljclark/busybear-linux)
 
 ### [supplementary ref](https://www.cnx-software.com/2018/03/16/how-to-run-linux-on-risc-v-with-qemu-emulator/)
@@ -42,13 +40,15 @@ git clone https://github.com/riscv/riscv-pk.git
 cd riscv-pk
 mkdir build && cd build
 ../configure \
-    --host=riscv64-unknown-linux-gnu\
+    --enable-logo \
+    --host=riscv64-unknown-linux-gnu \
     --with-payload=../../riscv-linux/vmlinux
 make
 ```
+
 Note: the automatically build bbl is located at: `busybear-linux/build/riscv-pk/bbl`
 
-### Run it on qemu
+### run it on qemu
 ```
 sudo qemu-system-riscv64 -s -S\
   -nographic -machine virt \

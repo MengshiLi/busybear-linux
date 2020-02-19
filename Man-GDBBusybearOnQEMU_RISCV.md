@@ -1,13 +1,11 @@
-## GDB debug busybear-linux on qemu-system-riscv64
-
-1. Environment is setup on Ubuntu:
+#### 1. Environment is setup on Ubuntu:
 - `uname -a` output: 
   Linux ubuntu-1804 5.0.0-1029-gcp #30~18.04.1-Ubuntu SMP Mon Jan 13 05:40:56 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
 - `sudo apt update` 
 - `sudo apt install build-essential`
 
   
-2. Install QEMU on Linux to support emulating risc-v:
+#### 2. Install QEMU on Linux to support emulating risc-v:
 - potential prerequisites:
   - `sudo apt-get install glib2.0`
   - `sudo apt-get install libpixman-1-dev`
@@ -24,7 +22,7 @@ sudo make install
 ```
 
 
-3. Install RISC-V cross-compiler tool chain:
+#### 3. Install RISC-V cross-compiler tool chain:
 - `git clone --recursive https://github.com/riscv/riscv-gnu-toolchain`
 - prerequisites for ubuntu: `sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev`
 - create isolated folder as the install path: `/usr/local/riscv`
@@ -33,7 +31,7 @@ sudo make install
 - add it to PATH `export PATH=$PATH:/usr/local/riscv/bin`.
 
 
-4. OR substitutely, just install GDB instead of the whole tool chain:
+#### 4. OR substitutely, just install GDB instead of the whole tool chain:
 - download the riscv GDB repo: `git clone https://github.com/riscv/riscv-binutils-gdb.git`
 - `cd riscv-binutils-gdb`
 - `git checkout fsf-gdb-8.3-with-sim`
@@ -45,7 +43,7 @@ sudo make install
 - verified above steps also succeed on macos
 
   
-5. build busybear linux with debugging stub installed:
+#### 5. build busybear linux with debugging stub installed:
 - prerequisites:
   - riscv-gnu tool chain (as in step 4)
   - qemu (as in step 2)
@@ -79,7 +77,7 @@ EOF
 
 - if normal user has no privilege, try `sudo su` to enter a new root-privileged shell first.
 
-6. Run busybear linux in QEMU
+#### 6. Run busybear linux in QEMU
 ```
 sudo qemu-system-riscv64 -s -S\
   -nographic -machine virt \
@@ -104,7 +102,7 @@ sudo qemu-system-riscv64 -s -S\
 - if gdb is too old, report register missing error.
 - egdb. 
 
-7. Start debugging with GDB
+#### 7. Start debugging with GDB
 - launch: 
   - `cd build/linux-5.0/`
   - `riscv64-unknown-linux-gnu-gdb vmlinux`, or after enter gdb, `file /path/to/vmlinuz`
@@ -116,5 +114,5 @@ sudo qemu-system-riscv64 -s -S\
   - `continue`
 
 
-8. have fun
+#### 8. have fun
 - [ref:](https://stackoverflow.com/questions/11408041/how-to-debug-the-linux-kernel-with-gdb-and-qemu/33203642#33203642)
